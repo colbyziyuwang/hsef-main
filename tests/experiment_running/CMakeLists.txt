@@ -1,0 +1,2 @@
+add_standard_test(experiment_runner_test.cpp)
+add_standard_test(search_resource_limits_test.cpp)

@@ -1,0 +1,3 @@
+add_hsef_exec(sliding_tile_app.cpp)
+add_hsef_exec(grid_pathfinding_app.cpp)
+add_hsef_exec(grid_pathfinding_scenario_app.cpp)

@@ -1,0 +1,4 @@
+add_standard_test(graph_test.cpp)
+add_standard_test(graph_transitions_test.cpp)
+add_standard_test(graph_utils_test.cpp)
+add_standard_test(vertex_hash_function_test.cpp)

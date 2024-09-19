@@ -1,0 +1,1 @@
+add_standard_test(heap_based_open_list_test.cpp)

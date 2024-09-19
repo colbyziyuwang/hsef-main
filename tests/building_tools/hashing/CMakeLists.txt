@@ -1,0 +1,3 @@
+add_standard_test(permutation_hash_function_test.cpp)
+add_standard_test(state_string_hash_function_test.cpp)
+add_standard_test(signed_permutation_hash_function_test.cpp)

@@ -1,0 +1,94 @@
+name: CI
+
+#Runs on push to main or pull requests to the main branch
+on: 
+  push:
+    branches: [main] 
+  pull_request:
+    branches: [main]
+
+jobs:
+  # Checks the formatting of the source files(.cpp and .h)
+  clang-format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: clang-format lint
+        uses: DoozyX/clang-format-lint-action@v0.15
+        with:
+          clangFormatVersion: 15
+
+  # Checks formatting of CMake files
+  cmake-format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install format dependencies
+        run: pip3 install cmake_format
+      - name: Check formatting of CMake Files
+        run: find . -type f \( -name "*.cmake" -o -name "CMakeLists.txt" \) -print0 | xargs -0 cmake-format --check
+  
+  # Build project and runs CTest on pull request. Only runs if both formatting jobs succeed
+  Build-PR:
+    needs: [clang-format, cmake-format]
+    if: ${{ github.event_name == 'pull_request' }}
+    uses: ./.github/workflows/build_and_test.yml 
+    with:
+        os: "{\"include\":[{\"os\":\"ubuntu-latest\"}]}"  #build and runs tests on ubuntu latest only
+
+  # Build project and runs CTest on push to main or merge to main. Only runs if both formatting jobs succeed
+  Build-Push:
+    needs: [clang-format, cmake-format]
+    if: ${{ github.event_name == 'push' }}
+    uses: ./.github/workflows/build_and_test.yml 
+    with:
+        os: "{\"include\":[{\"os\":\"ubuntu-latest\"},{\"os\":\"windows-latest\"}]}" #build and runs tests on the latest ubuntu and windows operating systems
+
+  # Creates the github badges based on the completion status of the operating systems in Build-Push job.
+  Create_Badges:
+    strategy:
+        fail-fast: false
+        matrix:
+            os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ubuntu-latest
+    needs: [Build-Push]
+    if: ${{ always() && github.event_name == 'push' }}
+    steps:
+      - name: Set OS Variables
+        run: |
+            if ${{matrix.os == 'ubuntu-latest' }}; then
+                echo "BUILD=${{needs.build-push.outputs.ubuntu}}" >> $GITHUB_ENV
+                echo "LABEL=Ubuntu Build" >> $GITHUB_ENV
+                echo "FILE=ubuntu_build.json" >> $GITHUB_ENV
+                echo "GIST=8a7b862d017dfd60797a30b27a0d4f8d" >> $GITHUB_ENV
+            elif ${{matrix.os == 'windows-latest' }}; then
+                echo "BUILD=${{needs.build-push.outputs.windows}}" >> $GITHUB_ENV
+                echo "LABEL=Windows Build" >> $GITHUB_ENV
+                echo "FILE=windows_build.json" >> $GITHUB_ENV
+                echo "GIST=5177a442099ac9041097a8d823e0a0b2" >> $GITHUB_ENV
+            else
+                echo "BUILD=${{needs.build-push.outputs.macos}}" >> $GITHUB_ENV
+                echo "LABEL=MacOS Build" >> $GITHUB_ENV
+                echo "FILE=macos_build.json" >> $GITHUB_ENV
+                echo "GIST=ab67d012c4f0fabc61d1fcb141e49835" >> $GITHUB_ENV
+            fi
+
+      - name: Set Status Variables
+        run: |
+            if ${{ env.BUILD == 'true' }}; then
+                echo "MSG=Passed" >> $GITHUB_ENV
+                echo "COLOR=green" >> $GITHUB_ENV
+            else
+               echo "MSG=Failed" >> $GITHUB_ENV
+               echo "COLOR=red" >> $GITHUB_ENV
+            fi
+
+      - name: Create Badge
+        uses: schneegans/dynamic-badges-action@v1.4.0
+        with:
+            auth: ${{ secrets.GIST_FILES }}
+            gistID: ${{ env.GIST }}
+            filename: ${{ env.FILE }}
+            label: ${{ env.LABEL }}
+            message: ${{ env.MSG }}
+            color: ${{ env.COLOR }}

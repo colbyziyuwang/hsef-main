@@ -1,0 +1,6 @@
+add_subdirectory(grid_pathfinding)
+add_subdirectory(sliding_tile_puzzle)
+add_subdirectory(pancake_puzzle)
+add_subdirectory(graph)
+add_subdirectory(burnt_pancake_puzzle)
+add_subdirectory(k_ary_tree)

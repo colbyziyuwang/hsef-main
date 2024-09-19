@@ -1,0 +1,4 @@
+add_hsef_exec(tutorial_01_states_and_transitions.cpp)
+add_hsef_exec(tutorial_02_nodes_and_evaluators.cpp)
+add_hsef_exec(tutorial_03_search_engines.cpp)
+add_hsef_exec(tutorial_04_experiment_running.cpp)

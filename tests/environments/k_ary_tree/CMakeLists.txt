@@ -1,0 +1,2 @@
+add_standard_test(k_ary_tree_state_test.cpp)
+add_standard_test(k_ary_tree_transitions_test.cpp)

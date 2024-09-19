@@ -1,0 +1,6 @@
+version 1
+0	simple.map	4	4	0	0	1	0	1.00000000
+0	simple.map	4	4	0	0	2	0	2.00000000
+0	simple.map	4	4	1	0	3	0	2.00000000
+0	simple.map	4	4	1	0	3	3	4.00000000
+1	simple.map	4	4	2	3	0	0	7.00000000

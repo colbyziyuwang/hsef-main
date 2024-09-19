@@ -1,0 +1,92 @@
+---
+  Checks:          '-*,
+                    bugprone-*,
+                    -bugprone-suspicious-include,
+                    -bugprone-implicit-widening-of-multiplication-result,
+                    -bugprone-easily-swappable-parameters,
+                    cert-*,
+                    -cert-err58-cpp,
+                    clang-analyzer-*,
+                    -clang-analyzer-cplusplus.NewDeleteLeaks,
+                    concurrency-*,
+                    cppcoreguidelines-*,
+                    -cppcoreguidelines-avoid-magic-numbers,
+                    -cppcoreguidelines-pro-bounds-array-to-pointer-decay,
+                    -cppcoreguidelines-pro-type-vararg,
+                    -cppcoreguidelines-owning-memory,
+                    -cppcoreguidelines-avoid-non-const-global-variables,
+                    google-build-explicit-make-pair,
+                    google-default-arguments,
+                    google-explicit-constructor,
+                    google-readability-casting,
+                    google-readability-avoid-underscore-in-googletest-name,
+                    google-runtime-operator,
+                    google-upgrade-googletest-case,
+                    hicpp-exception-baseclass,
+                    misc-*,
+                    -misc-definitions-in-headers,
+                    -misc-no-recursion,
+                    -misc-non-private-member-variables-in-classes,
+                    -misc-const-correctness,
+                    mpi-*,
+                    openmp-use-default-none,
+                    modernize-*,
+                    -modernize-pass-by-value,
+                    -modernize-use-trailing-return-type,
+                    -modernize-use-nodiscard,
+                    performance-*,
+                    portability-*,
+                    readability-*,
+                    -readability-braces-around-statements,
+                    -readability-else-after-return,
+                    -readability-function-cognitive-complexity,
+                    -readability-function-size,
+                    -readability-isolate-declaration,
+                    -readability-magic-numbers,
+                    -readability-named-parameter,
+                    -readability-uppercase-literal-suffix,
+                   '
+  CheckOptions:
+    - key:          readability-identifier-naming.NamespaceCase
+      value:        camelBack
+    - key:          readability-identifier-naming.MacroDefinitionCase
+      value:        UPPER_CASE
+    - key:          readability-identifier-naming.MacroDefinitionSuffix
+      value:        _
+    - key:          readability-identifier-naming.ClassCase
+      value:        CamelCase
+    - key:          readability-identifier-naming.StructCase
+      value:        CamelCase
+    - key:          readability-identifier-naming.EnumCase
+      value:        CamelCase
+    - key:          readability-identifier-naming.TypedefCase
+      value:        CamelCase
+    - key:          readability-identifier-naming.TemplateParameterCase
+      value:        CamelCase
+    - key:          readability-identifier-naming.TemplateParameterSuffix
+      value:        _t
+    - key:          readability-identifier-naming.MethodCase
+      value:        camelBack
+    - key:          readability-identifier-naming.MemberCase
+      value:        lower_case
+    - key:          readability-identifier-naming.PrivateMemberPrefix
+      value:        m_
+    - key:          readability-identifier-naming.ProtectedMemberPrefix
+      value:        m_
+    - key:          readability-identifier-naming.PublicMemberPrefix
+      value:        m_
+    - key:          readability-identifier-naming.EnumConstantCase
+      value:        lower_case
+    - key:          readability-identifier-naming.FunctionCase
+      value:        camelBack
+    - key:          readability-identifier-naming.GlobalConstantCase
+      value:        UPPER_CASE
+    - key:          readability-identifier-naming.LocalVariableCase
+      value:        lower_case
+    - key:          readability-identifier-naming.ParameterCase
+      value:        lower_case
+    - key:          modernize-use-default-member-init.UseAssignment
+      value:        1
+    - key:          cppcoreguidelines-special-member-functions.AllowSoleDefaultDtor
+      value:        1
+...

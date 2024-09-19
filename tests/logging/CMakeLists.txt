@@ -1,0 +1,3 @@
+add_standard_test(yaml_logging_test.cpp)
+add_standard_test(experiment_result_writer_test.cpp)
+add_standard_test(standard_search_statistics_test.cpp)

@@ -1,0 +1,3 @@
+add_subdirectory(eval_functions)
+add_subdirectory(node_containers)
+add_subdirectory(open_lists)

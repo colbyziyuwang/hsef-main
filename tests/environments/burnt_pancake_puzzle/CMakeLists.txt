@@ -1,0 +1,3 @@
+add_standard_test(burnt_pancake_state_test.cpp)
+add_test_with_libs(burnt_gap_heuristic_test.cpp TestHelpersLib)
+add_standard_test(burnt_pancake_transitions_test.cpp)

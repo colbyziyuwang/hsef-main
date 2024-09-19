@@ -1,0 +1,47 @@
+name: Testing
+
+# Runs when called by another workflow/.yml file
+# Requires a json list as a string specifying the operting systems. eg."{\"include\":[{\"os\":\"ubuntu-latest\"},{\"os\":\"windows-latest\"}]}"
+# Returns the Completion status of each of the selected operating systems
+on: 
+  workflow_call:
+    inputs:
+      os:
+        required: true
+        type: string
+
+    outputs:
+        ubuntu:
+            value: ${{jobs.Testing.outputs.ubuntu}}
+        windows:
+            value: ${{jobs.Testing.outputs.windows}}
+        macos:
+            value: ${{jobs.Testing.outputs.macos}}
+        
+jobs:
+  # Builds and runs CTest on the project using the operating systems provided in the input
+  Testing:
+    strategy:
+        fail-fast: false
+        matrix: ${{ fromJSON(inputs.os) }}
+
+    outputs:
+        macos: ${{ steps.out.outputs.macos-latest }}
+        windows: ${{ steps.out.outputs.windows-latest }}
+        ubuntu: ${{ steps.out.outputs.ubuntu-latest }}
+
+    runs-on: ${{matrix.os}}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Linux Dependencies
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install libxrandr-dev libxcursor-dev libudev-dev libopenal-dev libflac-dev libvorbis-dev libgl1-mesa-dev libegl1-mesa-dev
+      - name: Build Project
+        run: cmake -Bbuild -DENABLE_DOXYGEN=OFF -DBUILD_VISUALIZER=OFF && cmake --build ./build
+      - name: Run Tests
+        id: end
+        run: cd build && ctest --rerun-failed --output-on-failure
+      - name: Output Results
+        id: out
+        if: always()
+        run: echo "::set-output name=${{matrix.os}}::${{ steps.end.conclusion == 'success' }}"

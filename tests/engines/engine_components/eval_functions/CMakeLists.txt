@@ -1,0 +1,3 @@
+add_test_with_libs(f_cost_evaluator_test.cpp TestHelpersLib)
+add_test_with_libs(g_cost_evaluator_test.cpp TestHelpersLib)
+add_test_with_libs(weighted_f_cost_evaluator_test.cpp TestHelpersLib)

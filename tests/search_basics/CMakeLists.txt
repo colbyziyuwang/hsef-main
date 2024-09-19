@@ -1,0 +1,1 @@
+add_test_with_libs(transition_system_test.cpp TestHelpersLib)

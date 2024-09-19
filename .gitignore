@@ -1,0 +1,11 @@
+build/
+docs/html/
+docs/latex/
+out/
+.idea/
+.vscode/
+.vs/
+cmake-build-debug/
+cmake-build-debug-event-trace/
+*.idx
+.cache/

@@ -1,0 +1,27 @@
+/*! \mainpage
+
+This documentation provides information on using the the HSEF system. Please see the
+"Related Pages" section for information on the HSEF architecture, a C++ primer, and a description
+of the code conventions used.
+
+By clicking on Classes, you can find full documentation for each of the classes as well as the
+class hierarchy.
+
+\section executable_building Creating A New Executable
+
+It is straightforward to set up a new executable to run a custom experiment in HSEF.
+The suggested folder to do so is in the \c apps/ directory.
+In this directory, simply create a \c ".cpp" file with a \c main method.
+If the name of this file is \c my_app.cpp you will then have to modify \c apps/CMakeLists.txt to add
+the line
+\verbatim
+add_hsef_exec(my_app.cpp)
+\endverbatim
+
+This will then ensure that a executable called \c my_app will be generated the next time you build.
+
+\section acknowledgements Acknowledgements
+
+This framework is inspired by, and uses many similar approaches as Nathan Sturtevant's HOG2 system.
+Some of the underlying ideas come from experience using Fast Downward.
+*/

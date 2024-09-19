@@ -1,0 +1,3 @@
+add_subdirectory(best_first_search)
+add_subdirectory(engine_components)
+add_subdirectory(iterative_deepening)

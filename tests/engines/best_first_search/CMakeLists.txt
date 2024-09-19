@@ -1,0 +1,4 @@
+add_standard_test(best_first_search_test.cpp)
+add_standard_test(best_first_search_params_test.cpp)
+add_standard_test(a_star_epsilon_test.cpp)
+add_standard_test(a_star_epsilon_params_test.cpp)

@@ -1,0 +1,2 @@
+add_standard_test(multi_state_hash_based_goal_test_test.cpp)
+add_standard_test(single_goal_test_test.cpp)

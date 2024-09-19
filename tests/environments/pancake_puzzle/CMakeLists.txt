@@ -1,0 +1,4 @@
+add_standard_test(pancake_state_test.cpp)
+add_test_with_libs(gap_heuristic_test.cpp TestHelpersLib)
+add_standard_test(pancake_transitions_test.cpp)
+add_standard_test(pancake_utils_test.cpp)

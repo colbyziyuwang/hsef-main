@@ -1,0 +1,2 @@
+add_standard_test(id_engine_test.cpp)
+add_standard_test(id_engine_params_test.cpp)

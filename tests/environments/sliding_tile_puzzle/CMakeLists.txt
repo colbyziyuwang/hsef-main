@@ -1,0 +1,4 @@
+add_standard_test(sliding_tile_state_test.cpp)
+add_standard_test(sliding_tile_transitions_test.cpp)
+add_test_with_libs(sliding_tile_manhattan_heuristic_test.cpp TestHelpersLib)
+add_test_with_libs(sliding_tile_utils_test.cpp TestHelpersLib)
