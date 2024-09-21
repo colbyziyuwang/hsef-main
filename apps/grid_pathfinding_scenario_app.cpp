@@ -10,6 +10,9 @@
 #include "environments/grid_pathfinding/grid_pathfinding_scenario_running.h"
 #include "experiment_running/experiment_results.h"
 #include "experiment_running/search_resource_limits.h"
+#include "logging/experiment_results_writer.h"
+#include "utils/io_utils.h"
+#include "utils/string_utils.h"
 
 #include <stdint.h>
 #include <string>
@@ -45,5 +48,10 @@ int main() {
 
     // runs experiments
     std::vector<ExperimentResults<GridDirection>> multiple_output = runScenarioExperiments(engine, limits, scenarios, true);
+    
+    // store in csv
+    std::string results_as_csv = getResultsVectorAsCSV(multiple_output);
+    writeStringToFile(results_as_csv, "./assignment1_part3_hg.csv");
+
     return 0;
 }
