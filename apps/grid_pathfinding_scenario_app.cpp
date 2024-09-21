@@ -41,7 +41,9 @@ int main() {
 
     EvalsAndUsageVec<GridLocation, GridDirection> evals;  // this vector holds the evaluators used, in order
     evals.emplace_back(f_cost_evaluator, true);  // the main evaluator is f-cost. The true makes in prioritize by minimum f-cost
-    evals.emplace_back(g_cost_evaluator, false);  // Ties are broken by g-cost. The false means priority is given to high g-cost
+    // evals.emplace_back(g_cost_evaluator, false);  // Ties are broken by g-cost. The false means priority is given to high g-cost
+    evals.emplace_back(g_cost_evaluator, true);
+
     engine.setEvaluators(evals);
 
     SearchResourceLimits limits;  // no limits
@@ -51,7 +53,7 @@ int main() {
     
     // store in csv
     std::string results_as_csv = getResultsVectorAsCSV(multiple_output);
-    writeStringToFile(results_as_csv, "./assignment1_part3_hg.csv");
+    writeStringToFile(results_as_csv, "./assignment1_part3_lg.csv");
 
     return 0;
 }
