@@ -21,7 +21,7 @@ int main() {
     // Note that the scenario file contains the name of the map to run on
 
     // This sets the file with the scenario
-    std::string scenario_file = HSEF_DIR "/apps/input/simple.scen";
+    std::string scenario_file = HSEF_DIR "/apps/input/arena2.map.scen";
     std::string map_dir = HSEF_DIR "/apps/input/";
     std::vector<GridPathfindingScenario> scenarios = loadScenarioFile(scenario_file, map_dir);
 
