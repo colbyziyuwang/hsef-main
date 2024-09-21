@@ -43,7 +43,6 @@ int main() {
     evals.emplace_back(f_cost_evaluator, true);  // the main evaluator is f-cost. The true makes in prioritize by minimum f-cost
     // evals.emplace_back(g_cost_evaluator, false);  // Ties are broken by g-cost. The false means priority is given to high g-cost
     // evals.emplace_back(g_cost_evaluator, true); // Priority given to low g-cost
-    evals.emplace_back(g_cost_evaluator); // default
 
     engine.setEvaluators(evals);
 
