@@ -54,7 +54,7 @@ int main() {
     
     // store in csv
     std::string results_as_csv = getResultsVectorAsCSV(multiple_output);
-    writeStringToFile(results_as_csv, "./assignment1_part3_default.csv");
+    writeStringToFile(results_as_csv, "./assignment1_part2_default.csv");
 
     return 0;
 }
