@@ -13,10 +13,15 @@
 #include "logging/experiment_results_writer.h"
 #include "utils/io_utils.h"
 #include "utils/string_utils.h"
+#include "engines/engine_components/node_containers/node_list.h"
 
 #include <stdint.h>
 #include <string>
 #include <vector>
+#include <iostream>
+#include <fstream>
+
+using namespace std;
 
 int main() {
     // For 2D pathfinding, there are well known benchmarks which can be found here: https://movingai.com/benchmarks/grids.html
@@ -39,11 +44,45 @@ int main() {
     FCostEvaluator<GridLocation, GridDirection> f_cost_evaluator(heuristic);
     GCostEvaluator<GridLocation, GridDirection> g_cost_evaluator;
 
+    // Compute Heuristic for Initial Node
+    std::vector<double> result;
+    for (std::size_t i = 0; i < scenarios.size(); i++) {
+        // Get the GridPathfindingScenario object
+        GridPathfindingScenario scen = scenarios[i];
+
+        // Create node container and get goal, and start state
+        NodeList<GridLocation, GridDirection> nodes;
+        GridLocation goal = scen.m_goal_state;
+        GridPathfindingOctileHeuristic heur(goal);
+        GridLocation start = scen.m_start_state;
+        NodeID start_id = nodes.addNode(start);
+
+        // Prepare and execute the evaluator
+        heur.setNodeContainer(nodes);
+        heur.prepareToEvaluate();
+        heur.evaluate(start_id);
+        // cout << "Last computed evaluation: " << heur.getLastNodeEval() << "\n";
+        result.emplace_back(heur.getLastNodeEval());
+    }
+
+    // Write the heuristic values to a CSV file
+    std::ofstream outputFile("output.csv");
+
+    // Write the column header
+    outputFile << "heuristic\n";
+
+    // Write each value from the vector on a new line
+    for (const auto& value : result) {
+        outputFile << value << "\n";  // Write the value followed by a newline
+    }
+
+    // Close the file when done
+    outputFile.close();
+
     EvalsAndUsageVec<GridLocation, GridDirection> evals;  // this vector holds the evaluators used, in order
     evals.emplace_back(f_cost_evaluator, true);  // the main evaluator is f-cost. The true makes in prioritize by minimum f-cost
     // evals.emplace_back(g_cost_evaluator, false);  // Ties are broken by g-cost. The false means priority is given to high g-cost
-    // evals.emplace_back(g_cost_evaluator, true); // Priority given to low g-cost
-
+    evals.emplace_back(g_cost_evaluator, true); // Priority given to low g-cost
     engine.setEvaluators(evals);
 
     SearchResourceLimits limits;  // no limits
@@ -52,8 +91,8 @@ int main() {
     std::vector<ExperimentResults<GridDirection>> multiple_output = runScenarioExperiments(engine, limits, scenarios, true);
     
     // store in csv
-    std::string results_as_csv = getResultsVectorAsCSV(multiple_output);
-    writeStringToFile(results_as_csv, "./assignment1_part2_default.csv");
+    // std::string results_as_csv = getResultsVectorAsCSV(multiple_output);
+    // writeStringToFile(results_as_csv, "./assignment1_part2_default.csv");
 
     return 0;
 }
