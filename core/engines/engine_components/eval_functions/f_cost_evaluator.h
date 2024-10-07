@@ -65,6 +65,7 @@ template<class State_t, class Action_t>
 void FCostEvaluator<State_t, Action_t>::doEvaluateAndCache(NodeID to_evaluate) {
     m_heuristic->evaluate(to_evaluate);
     double f_cost = NE::getNodeContainer()->getGValue(to_evaluate) + m_heuristic->getLastNodeEval();
+    // double h_cost = m_heuristic->getLastNodeEval();
     NE::setCachedValues(to_evaluate, f_cost, m_heuristic->isLastNodeADeadEnd());
 }
 
