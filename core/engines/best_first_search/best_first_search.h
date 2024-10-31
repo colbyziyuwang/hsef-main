@@ -13,6 +13,7 @@
 #include "search_basics/node_evaluator.h"
 #include "search_basics/search_engine.h"
 #include "utils/floating_point_utils.h"
+#include "utils/random_gen_utils.h" 
 
 #include <cassert>
 #include <cfloat>
@@ -250,6 +251,7 @@ EngineStatus BestFirstSearch<State_t, Action_t, Hash_t>::doSingleSearchStep() {
     m_children.clear();
 
     m_app_actions = SE::getApplicableActions(m_nodes.getState(to_expand_id));
+    // randomlyReorderVector(m_app_actions, *SE::getRandomNumGenerator().get());
 
     for (unsigned i = 0; i < m_app_actions.size(); i++) {
         double current_action_cost = SE::getActionCost(m_nodes.getState(to_expand_id), m_app_actions[i]);

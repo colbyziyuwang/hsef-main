@@ -243,7 +243,7 @@ void IDEngine<State_t, Action_t>::addNewActionsToStack() {
     m_action_stack.emplace_back(SE::getApplicableActions(m_nodes.getState(m_nodes.size() - 1)));
 
     // randomly reorder action list if need to
-    if (m_action_stack.back().empty() && m_params.m_use_random_op_ordering) {
+    if (!m_action_stack.back().empty() && m_params.m_use_random_op_ordering) {
         randomlyReorderVector(m_action_stack.back(), *SE::getRandomNumGenerator().get());
     }
 }

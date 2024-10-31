@@ -54,37 +54,6 @@ int main() {
     // WeightedFCostEvaluator<SlidingTileState, BlankSlide> weighted_f_cost_evaluator(heuristic, 10.0);
     GCostEvaluator<SlidingTileState, BlankSlide> g_cost_evaluator;
 
-    // Compute Heuristic for Initial Node
-    // std::vector<double> result;
-    // for (std::size_t i = 0; i < start_states.size(); i++) {
-    //     // Create node container and get start state
-    //     NodeList<SlidingTileState, BlankSlide> nodes;
-    //     SlidingTileManhattanHeuristic heur = SlidingTileManhattanHeuristic(goal_state, cost_type);
-    //     SlidingTileState start = start_states[i];
-    //     NodeID start_id = nodes.addNode(start);
-
-    //     // Prepare and execute the evaluator
-    //     heur.setNodeContainer(nodes);
-    //     heur.prepareToEvaluate();
-    //     heur.evaluate(start_id);
-    //     // cout << "Last computed evaluation: " << heur.getLastNodeEval() << "\n";
-    //     result.emplace_back(heur.getLastNodeEval());
-    // }
-
-    // // Write the heuristic values to a CSV file
-    // std::ofstream outputFile("output_inverse.csv");
-
-    // // Write the column header
-    // outputFile << "heuristic\n";
-
-    // // Write each value from the vector on a new line
-    // for (const auto& value : result) {
-    //     outputFile << value << "\n";  // Write the value followed by a newline
-    // }
-
-    // // Close the file when done
-    // outputFile.close();
-
     EvalsAndUsageVec<SlidingTileState, BlankSlide> evals;
     evals.emplace_back(f_cost_evaluator, true);
     evals.emplace_back(g_cost_evaluator, false);
