@@ -37,61 +37,41 @@ int main() {
     SlidingTileTransitions transitions = SlidingTileTransitions(num_rows, num_cols, cost_type);
 
     // Sets up engine
-    IDEngineParams params;
-    params.m_use_random_op_ordering = false;
-    IDEngine<SlidingTileState, BlankSlide> engine = IDEngine<SlidingTileState, BlankSlide>(params);
-
-    SlidingTileManhattanHeuristic heuristic = SlidingTileManhattanHeuristic(goal_state, cost_type);
-    FCostEvaluator<SlidingTileState, BlankSlide> f_cost_evaluator(heuristic);
-    engine.setEvaluator(f_cost_evaluator);
-
-    // // Sets up engine
-    // BestFirstSearchParams params;
-    // params.m_use_reopened = false;
-    // BestFirstSearch<SlidingTileState, BlankSlide, uint64_t> engine(params);
-
-    // SlidingTileHashFunction hash_function;
-    // engine.setHashFunction(hash_function);
+    // IDEngineParams params;
+    // params.m_use_random_op_ordering = false;
+    // IDEngine<SlidingTileState, BlankSlide> engine = IDEngine<SlidingTileState, BlankSlide>(params);
 
     // SlidingTileManhattanHeuristic heuristic = SlidingTileManhattanHeuristic(goal_state, cost_type);
+    // // FCostEvaluator<SlidingTileState, BlankSlide> f_cost_evaluator(heuristic);
+    // WeightedFCostEvaluator<SlidingTileState, BlankSlide> weighted_f_cost_evaluator(heuristic, 20.0);
+    // engine.setEvaluator(weighted_f_cost_evaluator);
+
+    // Sets up engine
+    BestFirstSearchParams params;
+    params.m_use_reopened = false;
+    BestFirstSearch<SlidingTileState, BlankSlide, uint64_t> engine(params);
+
+    SlidingTileHashFunction hash_function;
+    engine.setHashFunction(hash_function);
+
+    SlidingTileManhattanHeuristic heuristic = SlidingTileManhattanHeuristic(goal_state, cost_type);
     // FCostEvaluator<SlidingTileState, BlankSlide> f_cost_evaluator(heuristic);
-    // GCostEvaluator<SlidingTileState, BlankSlide> g_cost_evaluator;
+    WeightedFCostEvaluator<SlidingTileState, BlankSlide> weighted_f_cost_evaluator(heuristic, 20.0);
+    GCostEvaluator<SlidingTileState, BlankSlide> g_cost_evaluator;
 
-    // EvalsAndUsageVec<SlidingTileState, BlankSlide> evals;
-    // evals.emplace_back(f_cost_evaluator, true);
-    // evals.emplace_back(g_cost_evaluator, false);
+    EvalsAndUsageVec<SlidingTileState, BlankSlide> evals;
+    evals.emplace_back(weighted_f_cost_evaluator, true);
+    evals.emplace_back(g_cost_evaluator, false);
 
-    // engine.setEvaluators(evals);
+    engine.setEvaluators(evals);
 
     SearchResourceLimits limits;  // no limits
 
-    // std::vector<ExperimentResults<BlankSlide>> multiple_output = runExperiments(engine, transitions, goal_test, limits, start_states, true);
+    std::vector<ExperimentResults<BlankSlide>> multiple_output = runExperiments(engine, transitions, goal_test, limits, start_states, true);
 
-    // // store in csv
-    // std::string results_as_csv = getResultsVectorAsCSV(multiple_output);
-    // writeStringToFile(results_as_csv, "a3_part2a_A.csv");
-
-    for (int i = 0; i < 10; ++i) {
-        // Run experiments
-        std::vector<SlidingTileState> starts;
-        starts.push_back(start_states[0]);
-        starts.push_back(start_states[0]);
-        starts.push_back(start_states[0]);
-
-        std::vector<ExperimentResults<BlankSlide>> multiple_output = runExperiments(engine, transitions, goal_test, limits, starts, true);
-
-        // Convert results to CSV format
-        std::string results_as_csv = getResultsVectorAsCSV(multiple_output);
-
-        // Open the file in append mode
-        std::ofstream outfile("a3_part3_IDA_non_random.csv", std::ios_base::app);
-        if (outfile.is_open()) {
-            outfile << results_as_csv;  // Append results to the file
-            outfile.close();
-        } else {
-            std::cerr << "Error opening file for appending" << std::endl;
-        }
-    }
+    // store in csv
+    std::string results_as_csv = getResultsVectorAsCSV(multiple_output);
+    writeStringToFile(results_as_csv, "a3_part5_A20.csv");
 
     return 0;
 }
